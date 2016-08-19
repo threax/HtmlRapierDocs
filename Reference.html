@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/edity/css/fade.min.css" type="text/css">
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-custom.css" type="text/css">
+
+    <meta charset="UTF-8">
+    <title>Reference - HtmlRapier</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">HtmlRapier Docs</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right" data-editor-navmenu="">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Reference#DataAttributes">Data Attributes</a></li>
+                                <li><a href="/Reference#JavascriptFunctions">Javscript Functions</a></li>
+                                <li><a href="/Reference#OtherPatterns">Other Patterns</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demo <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/HelloWorldDemo">Hello World</a></li>
+                                <li><a href="/SimpleFormInput">Simple Form Input</a></li>
+                                <li><a href="/ToggleDemo">Toggles</a></li>
+                                <li><a href="/TodoDemo">Todo List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 id="DataAttributes">Data Attributes</h3>
+<p>At its heart this library is a fancy way of labeling elements on a html page with some attributes that make extracting them later, with some special properties, easier. You can define the following types of attributes on your elements.</p>
+<ul>
+	<li><strong>Controller </strong>- <code><samp><font face="Courier New">data-hr-controller=&quot;<em>controllerName</em>&quot;</font></samp></code> - This defines the primary interface between your&nbsp;javascript and&nbsp;the&nbsp;markup and act as more or less of an entry point for everything else. The <em>controllerName&nbsp;</em>value defines the name of the controller.</li>
+	<li><strong>Event<strong> </strong></strong>-<strong> </strong><code><font face="Courier New">data-hr-on-<em>eventName</em>=&quot;<em>functionName</em>&quot;</font></code><em> - </em>Bind the element event <em>eventName </em>to the function in your controller named <em>functionName</em>.</li>
+	<li><strong>Config</strong> - <code><font face="Courier New">data-hr-config-<em>name</em>=&quot;<em>value</em>&quot;</font></code> - Create&nbsp;a configuration for the controller named <em>name </em>with the value <em>value</em>.</li>
+	<li><strong>Toggle</strong> - <code><font face="Courier New">data-hr-toggle=&quot;<em>name</em>&quot;</font></code> - Create a toggle named name. Toggles abstract the dom from your javascript for things like styles and classes. Toggles can be set&nbsp;to on and off in your javascript code.&nbsp;You can use the following attributes to in addition to a data-hr-toggle on an element to control what it looks like when the toggle is on and off.
+	<ul>
+		<li><strong>On Styles</strong> -<strong> </strong><code><font face="Courier New">data-hr-style-on=&quot;<em>styleList</em>&quot;</font></code> - Apply the styles in <em>styleList </em>when this toggle is on.</li>
+		<li><strong>Off Styles</strong> - <code><font face="Courier New">data-hr-style-off=&quot;<em>styleList</em>&quot;</font></code> - Apply the styles in <em>styleList </em>when this toggle is off.</li>
+		<li><strong>On Classes</strong> - <code><font face="Courier New">data-hr-class-on=&quot;<em>classList</em>&quot;</font></code> - Apply the classes in <em>classList </em>when this toggle is on.</li>
+		<li><strong>Off Classes</strong> - <code><font face="Courier New">data-hr-class-off=&quot;<em>classList</em>&quot;</font></code> - Apply the classes in <em>classList </em>when this toggle is off.</li>
+		<li><strong>Idle Classes</strong> - <code><font face="Courier New">data-hr-class-idle=&quot;<em>classList</em>&quot;</font></code> - Apply <em>classList </em>classes when the animations on this element have completed. HtmlRapier can track animation states when you toggle and will apply this class after the animations are completed.</li>
+	</ul></li>
+	<li><strong>Model </strong>- <code><font face="Courier New">data-hr-model=&quot;<em>name</em>&quot;</font></code> - Create a model on the specified element named <em>name</em>. Models define functions for getData, setData, appendData, getSrc and clear. Even though most models support a getData function, they will not do anything except return a blank object unless you have&nbsp;a&nbsp;FormModel, in which&nbsp;case you will get the form&#39;s data. A model, if it is able, will automatically repeat&nbsp;collection data that it is passed, otherwise it outputs a single element.&nbsp;All models will escape their output for malicious html, so you don&#39;t need to scrub your data yourself. Depending on what kind of element you attach this to you will get different models:
+	<ul>
+		<li><strong>FormModel</strong> - This model is created if this attribute is added to a form element. Form models can get and set a single piece of data using getData and setData. This is the only model that returns something useful from getData, which is the current data on the form as a plain javascript object.</li>
+		<li><strong>ComponentModel</strong> - This model is created when the data-hr-model attribute is added to a node that also has data-hr-component on it (or will get one from an anonymous template). It will use a template that you define to output the data you specify. If the data is a collection then you will get repeated elements. This is the most flexible kind of model. To get this kind of model add a <code><font face="Courier New">data-hr-component=&quot;name&quot;</font></code> attribute to it or define a template as its child, which will make an anonymous template, which has the same effect.</li>
+		<li><strong>TextNodeModel </strong>-&nbsp;With no special conditions a TextNodeModel is created. This will look for variables defined like {{varName}} and fill them in with matching data on the object bound to this model.</li>
+		<li>Finally you can configure the source string for a model with the <code><font face="Courier New">data-hr-model-src=&quot;<em>value</em>&quot;</font></code> attribute.</li>
+	</ul></li>
+	<li><strong>Component</strong> -&nbsp;<code><font face="Courier New">&lt;template data-hr-component=&quot;<em>name</em>&quot;&gt;<em>markup</em>&lt;/template&gt;</font></code> - Create a component named <em>name</em> with the&nbsp;html code&nbsp;<em>markup</em>. Components must be &lt;template&gt; elements. You can actually omit the <code><font face="Courier New">data-hr-component=&quot;name&quot;</font></code> attribute if you are creating the component as a direct descendant of a model node, which creates an anonymous template that gets its name assigned at runtime. This makes labeling components to their models much simpler since you don&#39;t have to come up with a ton of unique names, however, sometimes you will need to specify the names directly and you can do this here.
+	<ul>
+		<li><strong>Variant </strong>- <code><font face="Courier New">&lt;template data-hr-component=&quot;componentName&quot;&nbsp;data-hr-variant=&quot;<em>name</em>&quot;&gt;<em>markup</em>&lt;/template&gt;</font></code> - This will specify a variant of a template. Variants allow you to have different verisons of a component depending on your source data. You will define a function when binding data to a model that returns the name of the variant to use for a component. Variant names must be unique for each component, but can be repeated otherwise. You can omit the data-hr-component part if you are creating this variant as part of a variant chain. To do this create your first template element, either anonymous or with a name. Next as the immediate sibling to that first &lt;template&gt; element create another with the data-hr-variant attribute and give it a variant name. This will attach the 2nd template as a variant on the first. This chain will continue until there are no more siblings or another element type is encountered.</li>
+	</ul></li>
+	<li><strong>Ignore </strong>- <code><font face="Courier New">data-hr-ignored</font></code> - Add this to an element to ignore any components and controllers it has as children. This is mostly a special case to handle editors where you still need to run other&nbsp;HtmlRapier code.</li>
+</ul>
+<h3 id="JavascriptFunctions">Javascript Functions</h3>
+<p>Beyond its features for html the library defines a couple other classes and concepts that you can use.</p>
+<h4>JSNS</h4>
+<p>Jsns is the core of htmlrapier in terms of how it deals with files. This stands for Javascript Namespace and it allows you an easy way to define javascript libraries that can be shared across files, loaded in any order and either bundled + minified or as separate files (or a mixture). It does a better job of handling the reality of web development better than browserify that crams everything into one file and avoids the issues and partial deprecation of AMD. It can be thought of as a hybrid to those&nbsp;2 approaches that does not define anything about how the javascript gets on&nbsp;the page.&nbsp;It also tries to optimize a little bit by only loading the moduels that it needs. This way you can have a larger core shared library of javascript that is minified into one file with individual pages using their own separate javascript files that can plug into the rest of the system. This enables the sharing and chacing of core code resources between requests. It is also possible to load javascript using the async keyword with this system as long as the jsns.js contents have loaded.</p>
+<p>Jsns tries to emulate the node.js way of packaging things up. If you are using libraries that detect their environment wrapping them up on a jsns factory method should make them export correctly without any modifications. You can then import that module the standard way.</p>
+<p>If you use no other features from this library, at least use jsns.js. It helps a great deal for code organization.</p>
+<p>The class exposes 2 important functions:</p>
+<ol>
+	<li><strong>Define </strong>- <code><font face="Courier New">jsns.define(name, dependencies, factory)</font></code>&nbsp;- Define a module in the system. These will never run unless they are needed by something else, then the factory function will be called to create the module and its exports. A boilerplate example of a define function call looks like the following:
+	<pre style="margin: 0px; line-height: 125%;"><span style="background-color: rgb(255, 240, 240);">&quot;use strict&quot;</span>;
+
+jsns.define(<span style="background-color: rgb(255, 240, 240);">&quot;my.name&quot;</span>, [
+    
+],
+<span style="color: rgb(0, 136, 0); font-weight: bold;">function</span>(exports, module){
+    
+});</pre>Here we define a module named my.name, with no dependencies that defines nothing in its factory method. To specify dependencies list them in the array and add them as arguments to the factory function. The system will inject the libraries it finds for each dependency into the arguments to this function that come after module.
+	<br>
+	<br>To get a better idea of how this works look at the first few lines from controller.js.
+	<pre style="margin: 0px; line-height: 125%;"><span style="background-color: rgb(255, 240, 240);">&quot;use strict&quot;</span>;
+
+jsns.define(<span style="background-color: rgb(255, 240, 240);">&quot;hr.controller&quot;</span>, [
+    <span style="background-color: rgb(255, 240, 240);">&quot;hr.bindingcollection&quot;</span>,
+    <span style="background-color: rgb(255, 240, 240);">&quot;hr.domquery&quot;</span>,
+    <span style="background-color: rgb(255, 240, 240);">&quot;hr.ignored&quot;</span>,
+],
+<span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> (exports, module, BindingCollection, domQuery, ignoredNodes) {</pre>Here we define 3 dependencies and take them as arguments to the factory function.
+	<br>&nbsp;</li>
+	<li><strong>Run </strong>- <code><font face="Courier New">jsns.run(dependencies, factory)</font></code>&nbsp;- Run a module. Calling run with a factory function is what makes the jsns system start to actually do something. If all you do is define a bunch of stuff but never run anything, nothing will happen on your page. So you want to have at least one thing that runs per page. This will probably be what defines and activates your controllers. The factory functions passed in will not actually run until all of the dependencies have loaded. Remember the order does not matter after jsns.js is included. You can define a runner that uses HtmlRapier classes and then later include the HtmlRapier library itself. Once those dependencies have loaded the runner will run. Runners are run in the order they are added to jsns or once all their dependencies have loaded, whichever comes first.</li>
+</ol>
+<h4>Events</h4>
+<p>In addition to standard browser events HtmlRapier defines some pure javascript events that can be used to synchronize code without involving the browser. There are 3 variations defined in the events.js file.</p>
+<ol>
+	<li><strong>EventHandler </strong>- <code><font face="Courier New">hr.eventhandler</font></code> - A simple event handler. Add and remove listeners (and a context to act as this) and fire an event to those listeners. You can pass arguments by passing them when you call fire. These will be passed to all of your event listeners. You might want to define a standard for a particular EventHandler instance&#39;s listener functions, but javascript does not really enforce anything (which works out well here).</li>
+	<li><strong>LateBoundEventHandler&nbsp;</strong>- <code><font face="Courier New">hr.lateboundeventhandler</font></code> - The same as EventHandler, but will queue up all fire methods until the first listener is added. This makes it easy to handle events where you might miss something fired off before you have had the chance to load. Once the first listener is bound this works like a normal EventHandler and&nbsp;no longer queues events. This also means that the&nbsp;2nd listener added to this event will not get&nbsp;the queued events.&nbsp;Likely more rare to use than EventHandler, but helpful in certain situations.</li>
+	<li><strong>PromiseEventHandler </strong>- <code><font face="Courier New">hr.promiseeventhandler</font></code> - Works like a normal event handler, but when fired will return a promise that will wait for all fired events to complete. This makes it easier to synchronize events when they use async code since the master event promise won&#39;t fulfil until any sub promises returned by the listeners have fired.</li>
+</ol>
+<h4>Rest</h4>
+<p>There is a simple rest ajax request library. This supports get, post, put and delete. It also adds an upload funciton that tries to automate creating form data. All of these functions also have a promise variation such as getPromise or postPromise. These are the reccomended versions of these functions since promises work so much better than callbacks it is likely the plain versions will be removed in the future.</p>
+<h4>Storage</h4>
+<p>This provides an easy interface to the session storage in the browser. This will take plain javascript objects and serialize them to/from json when they are being saved.</p>
+<h4>Toggles</h4>
+<p>Toggles are discussed as part of the html section, since that handles most of the work, however, if you import the toggles module you can do a couple extra things.</p>
+<ol>
+	<li>Define Toggle groups to activate and deactivate sets of toggles more easily.
+	<pre style="margin: 0px; line-height: 125%;"><span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> load <span style="color: rgb(51, 51, 51);">=</span> bindings.getToggle(<span style="background-color: rgb(255, 240, 240);">&#39;load&#39;</span>);
+<span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> main <span style="color: rgb(51, 51, 51);">=</span> bindings.getToggle(<span style="background-color: rgb(255, 240, 240);">&#39;main&#39;</span>);
+<span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> fail <span style="color: rgb(51, 51, 51);">=</span> bindings.getToggle(<span style="background-color: rgb(255, 240, 240);">&#39;fail&#39;</span>);
+<span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> toggler <span style="color: rgb(51, 51, 51);">=</span> <span style="color: rgb(0, 136, 0); font-weight: bold;">new</span> toggles.Group(load, main, fail);
+toggler.activate(load);</pre>Here 3 toggles are added to a group. Then the toggler is told to activate the load toggle. This will turn the main and fail toggles to off and the load toggle to on.</li>
+	<li>Extend toggles with new types. You can use the addTogglePlugin function in this module to add a listener that is called when a toggle is being created. This was used to make bootstrap modals work over toggles if the toggle is attached to an item that has the class toggle on it. Toggles build chains of all possible actions when they are created, so if you use a class on attribute with a style on and off the class and style will be applied on on and only the off style will be applied on off.</li>
+</ol>
+<h3 id="OtherPatterns">Other Patterns</h3>
+<h4>Services</h4>
+<p>This library has no concrete concept of services or how you should make them (or indeed if you should make them at all). However, it is reccomended for any advanced server communication to create a module likely with service in its name that accesses the server and does work. You can also put events in them like loadStarted, loadComplete that can easily be bound to ui elements to make work more visible.</p>
+<h4>Promises</h4>
+<p>Promises are awesome for async code. Use them, the library will slowly move in the direction of using promises for all async code, its pretty close now. The library includes a promise polyfill so you can use them on IE and other browsers that don&#39;t support them natively.</p>
+                <div class="footer"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/lib/bootstrap.native/dist/bootstrap-native.min.js"></script>
+<script type="text/javascript" src="/lib/HtmlRapier/HtmlRapier.js"></script>
+
+</body>
+</html>

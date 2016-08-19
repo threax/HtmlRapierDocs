@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/edity/css/fade.min.css" type="text/css">
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-custom.css" type="text/css">
+
+    <meta charset="UTF-8">
+    <title>Hello World Demo - HtmlRapier</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">HtmlRapier Docs</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right" data-editor-navmenu="">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Reference#DataAttributes">Data Attributes</a></li>
+                                <li><a href="/Reference#JavascriptFunctions">Javscript Functions</a></li>
+                                <li><a href="/Reference#OtherPatterns">Other Patterns</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demo <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/HelloWorldDemo">Hello World</a></li>
+                                <li><a href="/SimpleFormInput">Simple Form Input</a></li>
+                                <li><a href="/ToggleDemo">Toggles</a></li>
+                                <li><a href="/TodoDemo">Todo List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Hello World</h1>
+<p>This is a really simple example of using a controller and a model to display some data on the screen.</p>
+<div data-hr-controller="helloWorldDemo">
+	<p data-hr-model="hello">Hello {{message}}</p>
+	<p data-hr-model="hello">So, that is pretty stupid, but it is actually doing something.</p></div>
+<h2>How Does It Work?</h2>
+<h3>The Markup</h3>
+<pre style="margin: 0px; line-height: 125%;"><span style="color: rgb(0, 119, 0);">&lt;div</span> <span style="color: rgb(0, 0, 204);">data-hr-controller=</span><span style="background-color: rgb(255, 240, 240);">&quot;helloWorldDemo&quot;</span><span style="color: rgb(0, 119, 0);">&gt;</span>
+    <span style="color: rgb(0, 119, 0);">&lt;p</span> <span style="color: rgb(0, 0, 204);">data-hr-model=</span><span style="background-color: rgb(255, 240, 240);">&quot;hello&quot;</span><span style="color: rgb(0, 119, 0);">&gt;</span>Hello {{message}}<span style="color: rgb(0, 119, 0);">&lt;/p&gt;</span>
+<span style="color: rgb(0, 119, 0);">&lt;/div&gt;</span></pre>
+<p>&nbsp;</p>
+<p>The markup defines a controller named <em>helloWorldDemo</em> and a model named <em>hello</em>&nbsp;and model that we use to bind our data. The model will be a TextNodeModel which will fill in a variable called {{message}}.</p>
+<h3>The Javascript</h3>
+<pre style="margin: 0px; line-height: 125%;"><span style="background-color: rgb(255, 240, 240);">&quot;use strict&quot;</span>;
+
+jsns.run([
+    <span style="background-color: rgb(255, 240, 240);">&quot;hr.controller&quot;</span>
+], <span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> (exports, module, controller) {
+    <span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> HelloWorldController(bindings) {
+        <span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> model <span style="color: rgb(51, 51, 51);">=</span> bindings.getModel(<span style="background-color: rgb(255, 240, 240);">&#39;hello&#39;</span>);
+
+        model.setData({
+            message<span style="color: rgb(51, 51, 51);">:</span> <span style="background-color: rgb(255, 240, 240);">&quot;World&quot;</span>
+        });
+    }
+
+    controller.create(<span style="background-color: rgb(255, 240, 240);">&quot;helloWorldDemo&quot;</span>, HelloWorldController);
+});</pre>
+<p>&nbsp;</p>
+<p>In javascript we create a controller constructor function named HelloWorldController. This is then passed to controller.create along with the name of the controller elements we want to bind new instances of that controller object to.</p>
+<p>Once the controller is being constructed we get our model from the bindings and set its message data with setData. This will go to the markup and replace any {{message}} variables with the value &quot;World&quot; from our data.</p>
+                <div class="footer"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/lib/bootstrap.native/dist/bootstrap-native.min.js"></script>
+<script type="text/javascript" src="/lib/HtmlRapier/HtmlRapier.js"></script>
+<script type="text/javascript" src="/HelloWorldDemo.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/edity/css/fade.min.css" type="text/css">
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-custom.css" type="text/css">
+
+    <meta charset="UTF-8">
+    <title>Default Page Title - HtmlRapier</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">HtmlRapier Docs</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right" data-editor-navmenu="">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Reference#DataAttributes">Data Attributes</a></li>
+                                <li><a href="/Reference#JavascriptFunctions">Javscript Functions</a></li>
+                                <li><a href="/Reference#OtherPatterns">Other Patterns</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demo <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/HelloWorldDemo">Hello World</a></li>
+                                <li><a href="/SimpleFormInput">Simple Form Input</a></li>
+                                <li><a href="/ToggleDemo">Toggles</a></li>
+                                <li><a href="/TodoDemo">Todo List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Toggle Demo</h1>
+<p>This demo shows how to use the toggles.</p>
+<p>Click Toggle Colors to make the red square turn blue.</p>
+<div data-hr-controller="toggleDemo"><button data-hr-on-click="toggleColors">Toggle Colors</button>
+	<div data-hr-style-on="background-color:blue" data-hr-toggle="color" style="width: 100px; height: 100px; background-color: red;">&nbsp;</div></div>
+<h2>How Does&nbsp;It Work?</h2>
+<h3>The Markup</h3>
+<pre style="margin: 0px; line-height: 125%;">    <span style="color: rgb(0, 119, 0);">&lt;div</span> <span style="color: rgb(0, 0, 204);">data-hr-controller=</span><span style="background-color: rgb(255, 240, 240);">&quot;toggleDemo&quot;</span><span style="color: rgb(0, 119, 0);">&gt;</span>
+        <span style="color: rgb(0, 119, 0);">&lt;button</span> <span style="color: rgb(0, 0, 204);">data-hr-on-click=</span><span style="background-color: rgb(255, 240, 240);">&quot;toggleColors&quot;</span><span style="color: rgb(0, 119, 0);">&gt;</span>Toggle Colors<span style="color: rgb(0, 119, 0);">&lt;/button&gt;</span>
+        <span style="color: rgb(0, 119, 0);">&lt;div</span> <span style="color: rgb(0, 0, 204);">data-hr-toggle=</span><span style="background-color: rgb(255, 240, 240);">&quot;color&quot; </span><span style="color: rgb(0, 0, 204);">data-hr-style-on=</span><span style="background-color: rgb(255, 240, 240);">&quot;background-color:blue&quot;</span> <span style="color: rgb(0, 0, 204);">style=</span><span style="background-color: rgb(255, 240, 240);">&quot;width: 100px; height: 100px; background-color: red;&quot;</span><span style="color: rgb(0, 119, 0);">&gt;
+</span><span style="color: rgb(136, 0, 0); font-weight: bold;">		&amp;nbsp;
+</span><span style="color: rgb(0, 119, 0);">	&lt;/div&gt;</span>
+    <span style="color: rgb(0, 119, 0);">&lt;/div&gt;</span></pre>
+<p>The markup defines a toggle named <em>color </em>with an on style that has a blue background and a standard style that is a red background. When the toggle is turned on the blue background will be added to its element style, which will override the red background. You can alternatively use classes with data-hr-class-on (or off).</p>
+<p>The markup also defines a button that binds the toggleColors function to the click event of the button.</p>
+<h3>The Javascript&nbsp;</h3>
+<pre style="margin: 0px; line-height: 125%;"><span style="background-color: rgb(255, 240, 240);">&quot;use strict&quot;</span>;
+
+jsns.run([
+    <span style="background-color: rgb(255, 240, 240);">&quot;hr.controller&quot;</span>
+], <span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> (exports, module, controller) {
+    <span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> ToggleDemoController(bindings) {
+        <span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> toggle <span style="color: rgb(51, 51, 51);">=</span> bindings.getToggle(<span style="background-color: rgb(255, 240, 240);">&#39;color&#39;</span>);
+        <span style="color: rgb(0, 136, 0); font-weight: bold;">var</span> on <span style="color: rgb(51, 51, 51);">=</span> <span style="color: rgb(0, 136, 0); font-weight: bold;">false</span>;
+        
+        <span style="color: rgb(0, 136, 0); font-weight: bold;">function</span> toggleColors(evt) {
+            on <span style="color: rgb(51, 51, 51);">=</span> <span style="color: rgb(51, 51, 51);">!</span>on;
+            <span style="color: rgb(0, 136, 0); font-weight: bold;">if</span> (on) {
+                toggle.on();
+            }
+            <span style="color: rgb(0, 136, 0); font-weight: bold;">else</span> {
+                toggle.off();                
+            }
+        }
+        <span style="color: rgb(0, 136, 0); font-weight: bold;">this</span>.toggleColors <span style="color: rgb(51, 51, 51);">=</span> toggleColors;
+    }
+
+    controller.create(<span style="background-color: rgb(255, 240, 240);">&quot;toggleDemo&quot;</span>, ToggleDemoController);
+});</pre>
+<p>The javscript defines a ToggleDemoController constructor function. This controller will get the toggle color from the bindings and it defines the toggleColors function, which toggles the color on and off. It is important to note that for the most part toggles do not maintain any state, so you have to track on and off status yourself. This demo is a bit contrived, usually you would put a series of toggles in a toggle group and activate them individually.</p>
+                <div class="footer"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/lib/bootstrap.native/dist/bootstrap-native.min.js"></script>
+<script type="text/javascript" src="/lib/HtmlRapier/HtmlRapier.js"></script>
+<script type="text/javascript" src="/ToggleDemo.js"></script>
+
+</body>
+</html>
