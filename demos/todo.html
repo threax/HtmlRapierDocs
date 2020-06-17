@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Demo</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>Todo List</h1>
+<p>Add Items to the Todo List. You can mark them important by checking the important box.</p>
+<p>&nbsp;</p>
+<div data-hr-controller="todo" data-hr-run="todo-demo">
+	<ol data-hr-view="items"><template>
+		<li><span>{{text}}</span> <span class="pull-right"> <a data-hr-on-click="edit">Edit</a> <a data-hr-on-click="deleteItem">Delete</a> </span></li>
+		</template>
+		<li><template data-hr-variant="important">
+		<li style="color: red;"><span>{{text}}</span> <span class="pull-right"> <a data-hr-on-click="edit">Edit</a> <a data-hr-on-click="deleteItem">Delete</a> </span></li>
+		</template></li>
+	</ol>
+	<form data-hr-form="add" data-hr-on-submit="addItem">
+		<div class="form-group"><label for="itemText">Enter A Todo Item</label> <input class="form-control" name="text" required="" type="text"></div>
+		<div class="checkbox"><label><input name="important" type="checkbox"> Important </label></div><button type="submit">Add</button></form></div>
+<h2>How&nbsp;Does It Work?&nbsp;</h2>
+<h3>The Markup</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">data-hr-controller</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>todo<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-run</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>todo-demo<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">ol</span> <span style="color:#93a1a1">data-hr-view</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>items<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">template</span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">li</span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>{{text}}<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">span</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>pull-right<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+                    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">a</span> <span style="color:#93a1a1">data-hr-on-click</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>edit<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Edit<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">a</span><span style="color:#586e75">&gt;</span> 
+                    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">a</span> <span style="color:#93a1a1">data-hr-on-click</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>deleteItem<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Delete<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">a</span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">li</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">template</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">template</span> <span style="color:#93a1a1">data-hr-variant</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>important<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">li</span> <span style="color:#93a1a1">style</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>color: red;<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>{{text}}<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">span</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>pull-right<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+                    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">a</span> <span style="color:#93a1a1">data-hr-on-click</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>edit<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Edit<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">a</span><span style="color:#586e75">&gt;</span> 
+                    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">a</span> <span style="color:#93a1a1">data-hr-on-click</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>deleteItem<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Delete<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">a</span><span style="color:#586e75">&gt;</span>
+                <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">span</span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">li</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">template</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">ol</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">form</span> <span style="color:#93a1a1">data-hr-form</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>add<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-on-submit</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>addItem<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>form-group<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">label</span> <span style="color:#93a1a1">for</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>itemText<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Enter A Todo Item<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">label</span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">input</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>form-control<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">name</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>text<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">required</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span><span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">type</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>text<span style="color:#269186">&quot;</span></span><span style="color:#586e75"> /&gt;</span>
+        <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>checkbox<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">label</span><span style="color:#586e75">&gt;</span><span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">input</span> <span style="color:#93a1a1">name</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>important<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">type</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>checkbox<span style="color:#269186">&quot;</span></span><span style="color:#586e75"> /&gt;</span> Important <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">label</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">button</span> <span style="color:#93a1a1">type</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>submit<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Add<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">button</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">form</span><span style="color:#586e75">&gt;</span>
+<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+</pre>
+<p>Here we define a controller called todo with a model called items. Inside the items we define the template we want&nbsp;to use to display the items. This also defines a variant chain that defines a variant called important. This variant will be used to display items we mark as important. By linking all the variants together one after another they will become associated with each other when they are registered in the component system.</p>
+<p>This page also defines a form for entering a new item with a name and a check box to determine if it is important.</p>
+<h3>The Typescript</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">///&lt;amd-module name=&quot;todo-demo&quot;/&gt;</span>
+
+<span style="color:#269186"><span style="color:#c60000">&quot;</span>use strict<span style="color:#c60000">&quot;</span></span>;
+<span style="color:#859900">import</span> <span style="color:#859900">*</span> as controller from <span style="color:#269186"><span style="color:#c60000">&quot;</span>hr.controller<span style="color:#c60000">&quot;</span></span>;
+
+<span style="color:#268bd2">interface</span> AddItemModel<span style="color:#268bd2">{</span>
+    text: string,
+    important: string
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">class</span> TodoDemoController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection, controller.InjectedControllerBuilder<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> todoItems: AddItemModel<span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#859900">=</span> <span style="color:#268bd2">[</span><span style="color:#268bd2">]</span>;
+    <span style="color:#738a05">private</span> addModel: controller.IForm<span style="color:#859900">&lt;</span>AddItemModel<span style="color:#859900">&gt;</span>;
+    <span style="color:#738a05">private</span> itemsModel: controller.IView<span style="color:#859900">&lt;</span>AddItemModel<span style="color:#859900">&gt;</span>;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection, <span style="color:#738a05">private</span> builder: controller.InjectedControllerBuilder<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.addModel <span style="color:#859900">=</span> bindings.getForm<span style="color:#859900">&lt;</span>AddItemModel<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&#39;</span>add<span style="color:#c60000">&#39;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.itemsModel <span style="color:#859900">=</span> bindings.getView<span style="color:#859900">&lt;</span>AddItemModel<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&#39;</span>items<span style="color:#c60000">&#39;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.itemsModel.<span style="color:#268bd2">clear</span><span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> findItemVariant<span style="color:#93a1a1">(</span>item: AddItemModel<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span>item.important <span style="color:#859900">===</span> <span style="color:#269186"><span style="color:#c60000">&quot;</span>on<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#859900">return</span> <span style="color:#269186"><span style="color:#c60000">&quot;</span>important<span style="color:#c60000">&quot;</span></span>;
+        <span style="color:#268bd2">}</span>
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> addItem<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">var</span> item <span style="color:#859900">=</span> <span style="color:#268bd2">this</span>.addModel.getData<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.itemsModel.<span style="color:#a57800">appendData</span><span style="color:#93a1a1">(</span>item, <span style="color:#268bd2">this</span>.builder.createOnCallback<span style="color:#93a1a1">(</span>TodoItemController<span style="color:#93a1a1">)</span>, <span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span> <span style="color:#859900">=</span><span style="color:#859900">&gt;</span> <span style="color:#268bd2">this</span>.findItemVariant<span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.todoItems.<span style="color:#268bd2">push</span><span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.addModel.<span style="color:#268bd2">clear</span><span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> removeItem<span style="color:#93a1a1">(</span>item: AddItemModel<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">var</span> index <span style="color:#859900">=</span> <span style="color:#268bd2">this</span>.todoItems.<span style="color:#268bd2">indexOf</span><span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span>;
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span>index <span style="color:#859900">!</span><span style="color:#859900">=</span> <span style="color:#859900">-</span><span style="color:#269186">1</span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.todoItems.<span style="color:#268bd2">splice</span><span style="color:#93a1a1">(</span>index, <span style="color:#269186">1</span><span style="color:#93a1a1">)</span>;
+            <span style="color:#268bd2">this</span>.rebuildList<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">}</span>
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> rebuildList<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.itemsModel.setData<span style="color:#93a1a1">(</span><span style="color:#268bd2">this</span>.todoItems, <span style="color:#268bd2">this</span>.builder.createOnCallback<span style="color:#93a1a1">(</span>TodoItemController<span style="color:#93a1a1">)</span>, <span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span> <span style="color:#859900">=</span><span style="color:#859900">&gt;</span> <span style="color:#268bd2">this</span>.findItemVariant<span style="color:#93a1a1">(</span>item<span style="color:#93a1a1">)</span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">class</span> TodoItemController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection, 
+                TodoDemoController, 
+                <span style="color:#586e75">//This last line is a special placeholder injector that injects whatever the controller has bound as its &quot;data&quot; this can vary from the type used in the constructor itself</span>
+                controller.InjectControllerData<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection, 
+               <span style="color:#738a05">private</span> todoDemoController: TodoDemoController, 
+               <span style="color:#738a05">private</span> itemData: AddItemModel<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span> <span style="color:#586e75">//Here the type does not match the injector args, but we are injecting the special controller.InjectControllerData service here.</span>
+        
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> edit<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#586e75">//This is a silly way to edit, but trying to keep it short.</span>
+        <span style="color:#268bd2">this</span>.itemData.text <span style="color:#859900">=</span> <span style="color:#859900">window</span>.<span style="color:#268bd2">prompt</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>Edit Todo Item<span style="color:#c60000">&quot;</span></span>, <span style="color:#268bd2">this</span>.itemData.text<span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.todoDemoController.rebuildList<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> deleteItem<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#586e75">//Silly to use confirm, but done for size</span>
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span><span style="color:#859900">window</span>.<span style="color:#268bd2">confirm</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>Do you want to delete <span style="color:#c60000">&quot;</span></span> <span style="color:#859900">+</span> <span style="color:#268bd2">this</span>.itemData.text <span style="color:#859900">+</span> <span style="color:#269186"><span style="color:#c60000">&quot;</span>?<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.todoDemoController.removeItem<span style="color:#93a1a1">(</span><span style="color:#268bd2">this</span>.itemData<span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">}</span>
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">var</span> builder <span style="color:#859900">=</span> <span style="color:#859900">new</span> controller.InjectedControllerBuilder<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+<span style="color:#586e75">//Inject the TodoDemoController as a shared instance so all the TodoItemController instances can see the same one.</span>
+builder.Services.addShared<span style="color:#93a1a1">(</span>TodoDemoController, TodoDemoController<span style="color:#93a1a1">)</span>;
+<span style="color:#586e75">//Inject the TodoItemController as a transient instance since we want a new one for each row.</span>
+builder.Services.addTransient<span style="color:#93a1a1">(</span>TodoItemController, TodoItemController<span style="color:#93a1a1">)</span>;
+
+builder.create<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>todo<span style="color:#c60000">&quot;</span></span>, TodoDemoController<span style="color:#93a1a1">)</span>;
+</pre>
+<p>This typescript defines 2 controllers. One for the todo list itself that controls the form and the list display. The other is for the individual list items and one will be created each time a list item is created. These services are registered with the di accordingly. Each time a new TodoItemController is created for an item a new row will be put onto the ui and the edit and delete functions will be hooked up to that row. Combine this with storing the data in the controller for the row and you have an easy way to work on just the object for that row. This becomes very powerful when combined with a HATEOAS api, since you can store the endpoint results in each row and call out to its links with very little logic in your typescript code, but HATEOAS isn&#39;t a requirement to use HtmlRapier.</p>
+<p>Inside the TodoDemoController class the function findItemVariant is responsible for the logic to find which variant to display. If you had more variants you could test for them in that function.</p>
+<p>The TodoItemController is created for each individual list item, in addition these are all recreated when rebuildList is called since it throws away the old list. The lifecycles of these objects are up to the developer, but used this way they will fall out of scope and be garbage collected (eventually) when the list is rebuilt.</p>
+<p>&nbsp;</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/demos/demos.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

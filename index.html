@@ -1,62 +1,96 @@
 <!doctype html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="/edity/css/fade.min.css" type="text/css">
-<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-custom.css" type="text/css">
-
     <meta charset="UTF-8">
-    <title>Quick Guide - HtmlRapier</title>
-</head>
-<body>
-    <div class="container">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">HtmlRapier Docs</a>
-                </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Guide</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right" data-editor-navmenu="">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/Reference#DataAttributes">Data Attributes</a></li>
-                                <li><a href="/Reference#JavascriptFunctions">Javscript Functions</a></li>
-                                <li><a href="/Reference#OtherPatterns">Other Patterns</a></li>
-                            </ul>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demo <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/HelloWorldDemo">Hello World</a></li>
-                                <li><a href="/SimpleFormInput">Simple Form Input</a></li>
-                                <li><a href="/ToggleDemo">Toggles</a></li>
-                                <li><a href="/TodoDemo">Todo List</a></li>
-                            </ul>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
                         </li>
-                    </ul>
-                </div>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
             </div>
-        </nav>
-        <div class="row">
-            <div class="col-md-12">
-                <h1>HtmlRapier Quick Guide</h1>
-<p>This guide shows some example usages of the HtmlRapier library. This library forms a good MVC foundation for heavier ajax websites without going overboard.</p>
-<p>Use the navbar at the top to visit the various sections. Either dive into the Reference guide or look at the individual demos.</p>
-                <div class="footer"></div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>HtmlRapier</h1>
+<p>This guide shows some example usages of the HtmlRapier library. This library forms a good MVC foundation for&nbsp;modern web applications&nbsp;without going overboard.</p>
+<p>Use the navbar&nbsp;on the left to visit the various sections. Either dive into the Reference guide or look at the individual demos.</p>
+<h2>HtmlRapier Goals</h2>
+<p>Instead of being just another javascript framework we try to think differently. For starters we don&#39;t even actually use javascript, but instead use typescript. These are the fundamental goals of the library and should help give you some insight into why things are done the way they are.</p>
+<ul>
+	<li><strong>Total separation of html (view) and typescript (logic).</strong> This is the foundational requirement of this library. The current front-end trend is to combine these two together, however, we believe that the separation is good and the barriers this creates can actually help you write better, more reusable&nbsp;code.</li>
+	<li><strong>Do not create another programming language.</strong>&nbsp;Most similar libraries fail here by adding extensions into html even for something as simple as an if statement. While this does not seem like a problem on the surface we believe lots of people can understand html and some custom attributes that are always static. Add logic, even just if statements and those people can no longer work on your code. All logic should go into typescript, that is the programming language, your html is a data file.</li>
+	<li><strong>Use standard html.</strong> All custom attributes in HtmlRapier are properly prefixed with data-. This way HtmlRapier code is fully html5 compliant and will validate without the need for additional tools. This also prevents your markup from being totally locked into a particular system. It also makes it easier to embed HtmlRapier into another application if desired, since you will always be html compliant and the data-hr-whatever attributes should be unique.</li>
+	<li><strong>Do not recreate the browser in javascript.</strong> So many of these frameworks want to also let you make mobile apps, so they include things like routing and view management so you can build &quot;Single Page Applications.&quot; We believe that a browser written in c++ with a well defined, standardized api will always be superior to this, so we let the browser handle this lifecycle.&nbsp; HtmlRapier works on a concept of a &quot;View Program&quot; where a particular view may be a farily rich application (think a crud table that lets you search and update items without refreshing the page), but we are not trying to shove the entire thing into one page. If we have another crud table for some other piece of data, that will be its own html endpoint with its own request and browser load.</li>
+	<li><strong>No experimental features.</strong> We could improve some of our code using experimental features in typescript like decorators, however, we won&#39;t use anything not committed to by its original authors as stable.</li>
+	<li><strong>Strongly Typed.</strong> HtmlRapier is strongly typed using Typescript to write code. We believe this increases the maintainability of the code by having better tooling and a compiler able to check for certain classes of errors.</li>
+	<li><strong>Flat node_modules structure encouraged.</strong> By default npm and node want to use the exact version of a particular library when running. HtmlRapier is designed to be used with yarn and to use yarn install --flat to install dependencies. If something is broken it needs to be fixed, not just silently use some old version.</li>
+	<li><strong>Use dependency injection.</strong> All controllers are created with a dependency injector. This makes configuration easier and provides more flexibility for the code you write.</li>
+	<li><strong>Be Small.</strong> The file that is generated to make the demos was 99kb&nbsp;not minified or compressed with comments and newlines and everything. It also includes the library and the code for the demos. It is 32kb minified.&nbsp;Minified and gzipped it is 7kb. These sizes may change for your code, but overall the library is signifigantly smaller than even jQuery.</li>
+	<li><strong>Be Reusable.</strong> If you write a controller to handle crud operations you should only have to do it once. This is more easily achieved since we have total separation of html and typescript.&nbsp;As&nbsp;long as the html defines the required controllers, toggles, views and forms it should be able to work.&nbsp;The core libray does not include the reusable parts, but check out <a href="https://github.com/threax/HtmlRapier.TreeMenu">HtmlRapier.TreeMenu</a> or <a href="https://github.com/threax/HtmlRapier.Widgets">HtmlRapier.Widgets</a> to see some examples of reusable components.</li>
+	<li><strong>Be Modular.</strong> The core library is pretty focused. If we need to do a big add on for more functionality we are most likely to put it in a new library.</li>
+</ul>
+<p>Hopefully that list will inform what you are seeing as you explore HtmlRapier. This library is already being used in several projects including the site you are looking at right now. This website was created with <a href="https://github.com/threax/EdityMcEditface">Edity McEditface</a> a static html content engine with a git based back end. All of the editing capability you see in that program is powered by HtmlRapier.</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/lib/bootstrap.native/dist/bootstrap-native.min.js"></script>
-<script type="text/javascript" src="/lib/HtmlRapier/HtmlRapier.js"></script>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
 
 </body>
+
 </html>

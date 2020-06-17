@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Demo</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>Toggle Demo</h1>
+<p>This demo shows how to use the toggles.</p>
+<p>Click Toggle Colors to make the red square turn blue.</p>
+<div data-hr-controller="toggleDemo" data-hr-run="toggle-demo"><button data-hr-on-click="toggleColors">Toggle Colors</button>
+	<div data-hr-style-on="background-color:blue" data-hr-toggle="color" style="width: 100px; height: 100px; background-color: red;">&nbsp;</div></div>
+<h2>How Does&nbsp;It Work?</h2>
+<h3>The Markup</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">data-hr-controller</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>toggleDemo<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-run</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>toggle-demo<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">button</span> <span style="color:#93a1a1">data-hr-on-click</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>toggleColors<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Toggle Colors<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">button</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">data-hr-style-on</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>background-color:blue<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-toggle</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>color<span style="color:#269186">&quot;</span></span> 
+<span style="color:#93a1a1">         style</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>width: 100px; height: 100px; background-color: red;<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span><span style="color:#cb4b16">&amp;nbsp;</span><span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+</pre>
+<p>The markup defines a toggle named <em>color </em>with an on style that has a blue background and a standard style that is a red background. When the toggle is turned on the blue background will be added to its element style, which will override the red background. You can alternatively use classes with data-hr-class-on (or off).</p>
+<p>The markup also defines a button that binds the toggleColors function to the click event of the button.</p>
+<h3>The Typescript&nbsp;</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">///&lt;amd-module name=&quot;toggle-demo&quot;/&gt;</span>
+
+<span style="color:#269186"><span style="color:#c60000">&quot;</span>use strict<span style="color:#c60000">&quot;</span></span>;
+<span style="color:#859900">import</span> <span style="color:#859900">*</span> as controller from <span style="color:#269186"><span style="color:#c60000">&quot;</span>hr.controller<span style="color:#c60000">&quot;</span></span>;
+
+<span style="color:#268bd2">class</span> ToggleDemoController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> toggle: controller.OnOffToggle;
+    <span style="color:#738a05">private</span> on: <span style="color:#268bd2">boolean</span> <span style="color:#859900">=</span> <span style="color:#b58900">false</span>;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.toggle <span style="color:#859900">=</span> bindings.getToggle<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&#39;</span>color<span style="color:#c60000">&#39;</span></span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> toggleColors<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.on <span style="color:#859900">=</span> <span style="color:#859900">!</span><span style="color:#268bd2">this</span>.on;
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span><span style="color:#268bd2">this</span>.on<span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.toggle.on<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">}</span>
+        <span style="color:#859900">else</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.toggle.off<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;                
+        <span style="color:#268bd2">}</span>
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">var</span> builder <span style="color:#859900">=</span> <span style="color:#859900">new</span> controller.InjectedControllerBuilder<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+builder.Services.addTransient<span style="color:#93a1a1">(</span>ToggleDemoController, ToggleDemoController<span style="color:#93a1a1">)</span>;
+builder.create<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>toggleDemo<span style="color:#c60000">&quot;</span></span>, ToggleDemoController<span style="color:#93a1a1">)</span>;
+</pre>
+<p>Here we create the ToggleDemoController class, which holds the toggle itself and defines the function toggleColors to turn the toggle on and off when the button is clicked.</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/demos/demos.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

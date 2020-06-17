@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependency Injection</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>Dependency Injection</h1>
+<p>HtmlRapier uses dependency injection when creating controllers to bring in any additional dependencies. The dependency injector works on a hierarchy based on 2 classes. The first is the <strong>ServiceCollection</strong>, which defines all the services (object constructors and lifetimes) and the other is the <strong>Scope</strong>, which holds resolved services.</p>
+<p>The system works by using constructor functions as the defined name of a service. So instead of using a string like &quot;ServiceClient&quot; we can actually use its object constructor, which is decently consistent (would run into the same kinds of problems instanceof would in shared contexts).&nbsp;If you want to define a interface that can be injected mark it as an abstract class instead. This will prevent it from being created, but typescript will still generate a constructor function for it. Now when you go to subclass the abstract class use implements instead of extends, this will make typescript implement the abstract class like it was an interface, but it will still be linked to the abstract type you created.</p>
+<p>There are two types of lifetimes currently supported, <strong>transient</strong> and <strong>shared</strong>. Transient will create a new instance each time the service is requested. Shared will create an instance the first time it is requested and then never again after that. To help manage these lifetimes you can create stacks of ServiceCollections. Using this you can add shared instances to child ServiceCollections and use different instances of the same classes with different groups of objects.</p>
+<p>To demonstrate this imagine you have a page with 2 crud tables on it that you want separate, but you also have some connections to the server side you want to reuse between them. You have also created some reusable controllers that define the table itself and the rows in that table. To make the rows know about the table itself you add the table as a shared instance so you only have one and the rows as transient to make a new one each time. You also add the data services you need. However, now we run into a problem. We can create the first table, but the second one appears to be just a part of the first.</p>
+<p>So instead of using the layout described above first create a controller builder to act as a root builder and add your shared data services there. Then create a child builder and setup the services for table one, the same way with a shared table controller and transient row controllers. Create another separete child builder from the root builder and add your other set of table controller services to it. Now create each controller using its unique builder. This time everything will be created correctly, but the services defined in the root builder will be shared between the two instances.</p>
+<p>The shared concept for this di system is sort of a combo between the singleton and scoped instance you might see in other di systems. Those are perfectly fine, but we were unable to think of a generic time to create a new scope&nbsp;so we leave this to the client programmer. The only exception to this is when you inject a controller builder into a controller, in that case a new child builder is created upon injection.</p>
+<p>There are two major ways to add services, either with the addX or tryAddX functions. The tryAdd version will not add a service again if it already exists in the current service collection level. This is a good way to provide default services by having your users call an addServices function you provide. More on this below. Also the tryAddX versions will not check parent ServiceCollecitons for the existance of a service before adding it, so you must make sure you are talking to the same SeriveCollection instance as anything else you are trying to block from being added.</p>
+<h2>Ways to Inject</h2>
+<p>Any typescript class can be injected or have things injected into it. All you need to do is add the InjectorArgs property to the class staticly and return what you need. Once you register the object as a service it will be created when needed. If you can&#39;t modify the original object you can pass a callback function that will be invoked when a new instance of your object is needed. You can inject based on any javascript function, but ideally keep it to constructor functions only.</p>
+<h2>Reccomendations for Dependency Injection</h2>
+<p>If you build a module or library that you want others to consume you should always provide a correctly setup set of default services or barring that document the additional services the user will have to inject. It is reccomended to export an addServices function that should be called by every user of your module. In that function use the tryAddSingleton or tryAddScoped&nbsp;functions to add your services. This will allow the user to override them, but makes it easy for them to get them all setup. Also, by doing things this way you can update your library to inject something new into some of your classes without having to update all the consuming client code, just update the library and go.</p>
+<h2>Justificaiton for Constructor Modification</h2>
+<p>This di technique does require runtime modification of the constructor functions and this is done by adding a&nbsp;<em>__diId</em> property to the constructor object. This method survives minification because the runtime doesn&#39;t care if its CoolController or A we are always pointing at the same thing.&nbsp;Obviously its not great to modify constructors like this, but the tooling advantages are numerous, for example find all references works and compilation will fail if a class is removed. Using strings can lead to its own issues tracking names and making sure things are unique. With the constructor method if you had&nbsp;two classes called CoolThing in two different modules the system has no problem figuring out which is which since its&nbsp;actually pointing at a constructor function not the string &quot;CoolThing&quot;.</p>
+<p>The biggest flaw in this system is needing to define the constructor arguments separatly from the injected arguments even though they are the same. This can probably be alleviated by typescript by using decorators, however, at the time of this libraries creation these were experimental, so I did not want to use them. We can always make this change later.</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Controllers</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>Writing Controllers</h1>
+<p>HtmlRapier controllers are really just plain javascript (or typescript) objects (pojos). This means that they do not inherit from a base class. They do, however, have a couple of special features.</p>
+<h2>Basic Controller</h2>
+<p>The most basic controller is an empty typescript class. That is good enough to get started. However, you will probably want to use the dependency injector for your controller, so you don&#39;t have to do it manually with a builder function. Also, to make a controller do something interesting you will want to inject at least a binding collection so you can discover your ui&#39;s views, forms and toggles, but there is no requirement to do so.</p>
+<pre style="background:#042029;color:#839496"><span style="color:#268bd2">class</span> SampleController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+</pre>
+<p>This shows the most basic controller that you are likely to make. It defines the InjectorArgs static property and returns the binding collection type. The constructor takes in the binding collection to be able to discover the views, forms and toggles on the ui. This can serve as a good starting point for any controller. Also a note on the BindingCollection, it is really only valid during the constructor. Because of the way they are implemented they will find any elements added under the root controller element, this could include new stuff added by other controllers (if you mix it up that way, which is unlikely). Don&#39;t ever store a BindingCollection and instead grab all of your bindings during construction.</p>
+<h2>Discovering UI Elements</h2>
+<p>Once you have a controller setup you will want to get access to the defined ui elements so that you can actually output something to the screen. There are 4 major types of ui elements that you can discover.</p>
+<ul>
+	<li>Toggles - These allow you to change the state of a ui element. You can define as many states effecting an element&#39;s css or style as you may need. When html is developed for your controller the author can use these states to enhance their ui. Out of the box HtmlRapier comes with a toggle with &quot;on&quot; and &quot;off&quot; states.</li>
+	<li>Forms - These allow the user to give input in some manner.</li>
+	<li>Views - Display data to the user, can be a repeater of array data or a single item. The type of element created depends on the markup the user creates.</li>
+	<li>Handles - In a perfect world we would not need these. However, in reality there are lots of great javascript libraries written in a different style that want to get access to raw html elements. Handles allow for this by giving you direct access to the underlying html element. You should use this as little as possible and the only supported scenerio is to pass the handle element to another library. You should never need to directly manipulate elements with HtmlRapier.</li>
+</ul>
+<p>For any forms or views you create you should also create an interface that describes what data they display. This way you retain your strong typing throughout the system. If you don&#39;t want to do this use &lt;any&gt; as your generic argument, but this is not reccomended. Take the extra time and clue everyone else and your future self in on what your trying to do by defining an interface.</p>
+<p>Finally all elements that your code attempts to discover, except the handles, will always be valid objects when returned from the BindingCollection. If a particular html element cannot be found that matches what you are looking for a null version of that object will be created instead. This allows you to write your code always assuming that your toggles, views and forms are valid objects, even if they don&#39;t do anything at runtime since you are using the null versions (which fully implement the interfaces). This allows for a high degree of flexibility between the ui and your code without needing a million if statements.</p>
+<pre style="background:#042029;color:#839496"><span style="color:#268bd2">interface</span> SampleInputData<span style="color:#268bd2">{</span>
+    name: string,
+    value: number
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">interface</span> SampleViewData<span style="color:#268bd2">{</span>
+    type: string,
+    report: string
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">class</span> SampleController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> form: controller.IForm<span style="color:#859900">&lt;</span>SampleInputData<span style="color:#859900">&gt;</span>;
+    <span style="color:#738a05">private</span> view: controller.IView<span style="color:#859900">&lt;</span>SampleViewData<span style="color:#859900">&gt;</span>;
+    <span style="color:#738a05">private</span> toggle: controller.OnOffToggle;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.form <span style="color:#859900">=</span> bindings.getForm<span style="color:#859900">&lt;</span>SampleInputData<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>theForm<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.view <span style="color:#859900">=</span> bindings.getView<span style="color:#859900">&lt;</span>SampleViewData<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>theView<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.toggle <span style="color:#859900">=</span> bindings.getToggle<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>theToggle<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+</pre>
+<p>This example shows creating a controller that gets a form, view and toggle and stores them for later use. These would be defined on elements by adding the appropriate <a href="/HtmlRapierDocs/data-attributes">data attribute</a>.</p>
+<h2>Binding Event Handlers</h2>
+<p>Any public (and protected/private since they are all the same in the compiled javascript) functions defined on a controller can be bound to events that addEventListener would be able to call. This is done with the <code>data-hr-on-x</code> attribute where x is the name of the event that you want to use without the on. So if you wanted to bind to the click event you would add <code>data-hr-on-click=&quot;doSomething&quot;</code> as an attribute to the target element, likely a button or something. As an example of how flexible this is, drag and drop reordering was added to the HtmlRapier.TreeMenu library using this binding method. If browsers add new events the library should &quot;add&quot; them automatically since the whole thing is really just a string trick.</p>
+<pre style="background:#042029;color:#839496"><span style="color:#268bd2">class</span> SampleController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> toggle: controller.OnOffToggle;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#268bd2">this</span>.toggle <span style="color:#859900">=</span> bindings.getToggle<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>theToggle<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> doSomething<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{
+</span>        <span style="color:#586e75">//Almost always want to prevent the default on these types of events.</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#586e75">//Do something interesting, here we change the toggle</span>
+        <span style="color:#268bd2">this</span>.toggle.mode <span style="color:#859900">=</span> <span style="color:#859900">!</span><span style="color:#268bd2">this</span>.toggle.mode;
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+</pre>
+<p>Here we define a controller that toggles its toggle when doSomething is called. That function can be bound to any event on any element and will toggle the toggle when that event fires.</p>
+<h2>Binding Lifecycle</h2>
+<p>To bind a controller to the ui the following steps occur.</p>
+<ol>
+	<li>The user sets up a controller builder and injects the services they need.</li>
+	<li>The user calls builder.create passing in the name of the controller and the controller class to use.</li>
+	<li>The builder scans the page for all instances of the controller attribute <code>data-hr-controller=&quot;x&quot;</code> where x is the argument we passed to builder.create.</li>
+	<li>For each found controller the following happens:
+	<ol>
+		<li>Grab the root element of the controller and create a BindingCollection instance from it.</li>
+		<li>Create a new ServiceCollection and Scope with the current builder as the parent, inject BindingCollection&nbsp;into it.</li>
+		<li>Ask the scope for a new instance of the controller. This will inject the BindingCollection or anything else needed.</li>
+		<li>The controller sets itself up in its constructor.</li>
+		<li>The builder binds all of the controller&#39;s functions to the dom using addEventListener for all the <code>data-hr-on-x=&quot;event&quot;</code> attributes in the controller.</li>
+		<li>Finally, if the controller defines a postBind function it is called. More on this below.</li>
+	</ol></li>
+</ol>
+<h2>Using Web Components</h2>
+<p>You can also use web components to create controllers. Note that your class is not a HTMLElement like a normal web component class. Instead a web component is created that forwards the events to your controller class. Your class&#39;s constructor is called after the component is fully formed with the dependencies injected from DI. This happens during the web component connectedCallback. Before then nothing is created. This also alters the expected lifecycle. Normally you would expect constructed -&gt; attributeChangedCallback -&gt; connectedCallback for a new component, but now it will be constructor -&gt; connectedCallback. The component is not fully formed enough on the first attributeChangedCallback to respond usefully.</p>
+<p>To use this feature create a simple controller:</p>
+<div style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;">
+	<div><span style="color: #569cd6;">class</span><span style="color: #d4d4d4;">&nbsp;</span><span style="color: #4ec9b0;">WebComponentController</span><span style="color: #d4d4d4;">&nbsp;{</span></div>
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #569cd6;">public</span><span style="color: #d4d4d4;">&nbsp;</span><span style="color: #569cd6;">static</span><span style="color: #d4d4d4;">&nbsp;</span><span style="color: #569cd6;">get</span><span style="color: #d4d4d4;">&nbsp;</span><span style="color: #9cdcfe;">InjectorArgs</span><span style="color: #d4d4d4;">():&nbsp;</span><span style="color: #4ec9b0;">controller</span><span style="color: #d4d4d4;">.</span><span style="color: #4ec9b0;">InjectableArgs</span><span style="color: #d4d4d4;">&nbsp;{</span></div>
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #c586c0;">return</span><span style="color: #d4d4d4;">&nbsp;[</span><span style="color: #9cdcfe;">controller</span><span style="color: #d4d4d4;">.</span><span style="color: #4ec9b0;">BindingCollection</span><span style="color: #d4d4d4;">];</span></div>
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div>&nbsp;
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #569cd6;">constructor</span><span style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">bindings</span><span style="color: #d4d4d4;">:&nbsp;</span><span style="color: #4ec9b0;">controller</span><span style="color: #d4d4d4;">.</span><span style="color: #4ec9b0;">BindingCollection</span><span style="color: #d4d4d4;">)&nbsp;{</span></div>
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #9cdcfe;">console</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">log</span><span style="color: #d4d4d4;">(</span><span style="color: #ce9178;">&quot;Created&nbsp;Controller&quot;</span><span style="color: #d4d4d4;">);</span></div>
+	<div><span style="color: #d4d4d4;">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div>
+	<div><span style="color: #d4d4d4;">}</span></div></div>
+<p>&nbsp;</p>
+<p>Next register your component for DI like normal and register the component name itself.</p>
+<div style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;">
+	<div><span style="color: #4fc1ff;">builder</span><span style="color: #d4d4d4;">.</span><span style="color: #9cdcfe;">Services</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">tryAddTransient</span><span style="color: #d4d4d4;">(</span><span style="color: #4ec9b0;">WebComponentController</span><span style="color: #d4d4d4;">,&nbsp;</span><span style="color: #4ec9b0;">WebComponentController</span><span style="color: #d4d4d4;">);</span></div>
+	<div><span style="color: #4fc1ff;">builder</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">registerWebComponent</span><span style="color: #d4d4d4;">(</span><span style="color: #ce9178;">&quot;demo-component&quot;</span><span style="color: #d4d4d4;">,&nbsp;</span><span style="color: #4ec9b0;">WebComponentController</span><span style="color: #d4d4d4;">);</span></div></div>
+<p>&nbsp;</p>
+<p>Now anywhere you create a <strong>&lt;demo-component&gt;</strong> element the WebComponentController class will be created. You can include elements in your custom element and look them up from the binding collection like normal. These are unique compared to normal components, since no matter how they get onto the page you will get an instance of your controller class hooked up to it.</p>
+<h2>Advanced Binding Scenerios</h2>
+<p>The Binding Collection is fairly consistent and will give you what you want most of the time without a lot of fuss. The diffuculty comes in when you start nesting controllers inside one another particularly if that controller is really the same all the way down. In this case you could end up with toggles that toggle everything instead of just the current level or other weird effects. If you find something like this happening you can add a function to your controller called postBind, ideally make it protected. This will be called by the controller builder after the controller&#39;s functions have been bound to the ui and no more changes will be made to bindings from this point on.</p>
+<pre style="background:#042029;color:#839496"><span style="color:#738a05">export</span> <span style="color:#268bd2">class</span> TreeMenuItem <span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection, controller.InjectControllerData, controller.InjectedControllerBuilder<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> folder: TreeMenuFolderNode;
+    <span style="color:#738a05">private</span> loadedChildren <span style="color:#859900">=</span> <span style="color:#b58900">false</span>;
+    <span style="color:#738a05">private</span> childToggle: controller.OnOffToggle;
+    <span style="color:#738a05">private</span> childModel: controller.Model<span style="color:#859900">&lt;</span>MenuItemModel<span style="color:#859900">&gt;</span>;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span><span style="color:#738a05">private</span> bindings: controller.BindingCollection, <span style="color:#738a05">protected</span> folderMenuItemInfo: MenuItemModel, <span style="color:#738a05">private</span> builder: controller.InjectedControllerBuilder<span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+        <span style="color:#586e75">//Here we gather up all the items for our current level</span>
+        <span style="color:#268bd2">this</span>.childModel <span style="color:#859900">=</span> <span style="color:#268bd2">this</span>.bindings.getModel<span style="color:#859900">&lt;</span>MenuItemModel<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>children<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span>IsFolder<span style="color:#93a1a1">(</span>folderMenuItemInfo.original<span style="color:#93a1a1">)</span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.folder <span style="color:#859900">=</span> folderMenuItemInfo.original;
+        <span style="color:#268bd2">}</span>
+        <span style="color:#268bd2">this</span>.childToggle <span style="color:#859900">=</span> bindings.getToggle<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>children<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">var</span> currentToggle <span style="color:#859900">=</span> bindings.getToggle<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>current<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+        currentToggle.mode <span style="color:#859900">=</span> folderMenuItemInfo.original.currentPage;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">protected</span> postBind<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+        <span style="color:#586e75">//In postBind we are done setting up, it is now safe to create the children</span>
+        <span style="color:#859900">if</span> <span style="color:#93a1a1">(</span><span style="color:#268bd2">this</span>.folder <span style="color:#859900">&amp;</span><span style="color:#859900">&amp;</span> <span style="color:#268bd2">this</span>.folder.expanded<span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.buildChildren<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>
+            <span style="color:#268bd2">this</span>.childToggle.on<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">}</span>
+        <span style="color:#859900">else</span> <span style="color:#268bd2">{</span>
+            <span style="color:#268bd2">this</span>.childToggle.off<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">}</span>
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">public</span> toggleMenuItem<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+        <span style="color:#586e75">//This function changes the item&#39;s child visibility.</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        evt.stopPropagation<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.buildChildren<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.childToggle.toggle<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.folder.expanded <span style="color:#859900">=</span> <span style="color:#268bd2">this</span>.childToggle.mode;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#586e75">//Remaining code removed</span>
+<span style="color:#268bd2">}</span>
+</pre>
+<p>This example is taken from the TreeMenu library to show a larger example. For TreeMenus the controllers repeat nested in one another. If the child items are created in the constructor and not the postBind function the toggleMenuItem function will be called by child menu items since they will have all been created before the functions are bound, which will bind the root instance to all created children. By moving this code to postBind the functions for this controller are already bound to its html, so when we create children no additional changes are made at this level.</p>
+<p>This has not come up very often when building controllers, but it is something to watch out for.</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

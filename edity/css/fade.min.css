@@ -1,1 +1,0 @@
-﻿.fadeIn{animation:fadeIn 200ms;}@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}.fadeOut{animation:fadeOut 200ms;}.fadeOut.idle{display:none !important;}@keyframes fadeOut{0%{opacity:1;}100%{opacity:0;}}.collapse{transition:height .3s ease-out;}.popover .close{position:absolute;top:7px;right:10px;}.startHidden{display:none;}

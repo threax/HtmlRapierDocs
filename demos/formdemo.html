@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Demo</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1 data-hr-run="form-demo">Form Demo</h1>
+<div data-hr-controller="formDemo">
+    <form data-hr-form="form" data-hr-on-submit="submit">
+        <div class="row">
+            <div class="form-group col-sm-4" data-hr-input-start="" data-hr-toggle="firstError" data-hr-class-on="has-error">
+                <label class="control-label">First Name<span data-hr-view="firstErrorMessage" data-hr-toggle="firstError" data-hr-style-on="display:inline" style="display:none"> - {{this}}</span></label>
+                <input class="form-control" name="first" type="text">
+            </div>
+
+            <div class="form-group col-sm-4" data-hr-input-start="" data-hr-toggle="middleError" data-hr-class-on="has-error">
+                <label class="control-label">Middle Name<span data-hr-view="middleErrorMessage" data-hr-toggle="middleError" data-hr-style-on="display:inline" style="display:none"> - {{this}}</span></label>
+                <input class="form-control" name="middle" type="text">
+            </div>
+
+            <div class="form-group col-sm-4" data-hr-input-start="" data-hr-toggle="lastError" data-hr-class-on="has-error">
+                <label class="control-label">Last Name<span data-hr-view="lastErrorMessage" data-hr-toggle="lastError" data-hr-style-on="display:inline" style="display:none"> - {{this}}</span></label>
+                <input class="form-control" name="last" type="text">
+            </div>
+        </div>
+
+        <div class="form-group" data-hr-input-start="" data-hr-toggle="comboTestError" data-hr-class-on="has-error">
+            <label class="control-label">comboTest<span data-hr-view="comboTestErrorMessage" data-hr-toggle="comboTestError" data-hr-style-on="display:inline" style="display:none"> - {{this}}</span></label>
+            <select class="form-control" name="comboTest"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" data-hr-form-end="">Submit</button>
+    </form>
+
+    <div class="row">
+        <button data-hr-on-click="setData1">Set Data 1</button>
+        <button data-hr-on-click="setData2">Set Data 2</button>
+        <button data-hr-on-click="showErrors">Show Errors</button>
+        <button data-hr-on-click="clearErrors">Clear Errors</button>
+        <button data-hr-on-click="clear">Clear</button>
+        <button data-hr-on-click="setSchema1">Set Schema 1</button>
+        <button data-hr-on-click="setSchema2">Set Schema 2</button>
+        <button data-hr-on-click="setSchema3">Set Schema 3</button>
+    </div>
+</div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/demos/demos.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Demo</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1 data-hr-run="hello-world-demo">Hello World</h1>
+<p>This is a really simple example of using a controller and a model to display some data on the screen.</p>
+<div data-hr-controller="helloWorldDemo">
+	<p data-hr-view="hello">Hello {{message}}</p>
+	<p>So, that is pretty stupid, but it is actually doing something.</p></div>
+<h2>How Does It Work?</h2>
+<h3>The Markup</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">data-hr-controller</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>helloWorldDemo<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">p</span> <span style="color:#93a1a1">data-hr-view</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>hello<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Hello {{message}}<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">p</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">p</span><span style="color:#586e75">&gt;</span>So, that is pretty stupid, but it is actually doing something.<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">p</span><span style="color:#586e75">&gt;</span>
+<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+</pre>
+<p>The markup defines a controller named <em>helloWorldDemo</em> and a model named <em>hello</em>&nbsp;and model that we use to bind our data. The model will be a TextNodeModel which will fill in a variable called {{message}}.</p>
+<h3>The Typescript</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">/// This line gives our module a predictable name</span>
+<span style="color:#586e75">///&lt;amd-module name=&quot;hello-world-demo&quot;/&gt;</span>
+
+<span style="color:#269186"><span style="color:#c60000">&quot;</span>use strict<span style="color:#c60000">&quot;</span></span>;
+<span style="color:#859900">import</span> <span style="color:#859900">*</span> as controller from <span style="color:#269186"><span style="color:#c60000">&quot;</span>hr.controller<span style="color:#c60000">&quot;</span></span>;
+
+<span style="color:#586e75">//Define the contents of your views with interfaces, this documents what can be written to a view.</span>
+<span style="color:#268bd2">interface</span> IHelloView <span style="color:#268bd2">{</span>
+    message: string;
+<span style="color:#268bd2">}</span>
+
+<span style="color:#586e75">//Define a class to hold our controller, no base class, these are pojos.</span>
+<span style="color:#268bd2">class</span> HelloWorldController <span style="color:#268bd2">{</span>
+    <span style="color:#586e75">//This is the arguments for the dependency injector, you return the constructor</span>
+    <span style="color:#586e75">//functions for the types you want to inject into the constructor.</span>
+    <span style="color:#586e75">//The return items here and the arguments to the constructor must match.</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#586e75">//Views are strongly typed to help ensure the right data gets into them.</span>
+    <span style="color:#738a05">private</span> view: controller.IView<span style="color:#859900">&lt;</span>IHelloView<span style="color:#859900">&gt;</span>;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span> <span style="color:#268bd2">{</span>
+        <span style="color:#586e75">//Extract the view from the binding collection.</span>
+        <span style="color:#268bd2">this</span>.view <span style="color:#859900">=</span> bindings.getView<span style="color:#859900">&lt;</span>IHelloView<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>hello<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+
+        <span style="color:#586e75">//Set the data on the view.</span>
+        <span style="color:#268bd2">this</span>.view.setData<span style="color:#93a1a1">(</span><span style="color:#268bd2">{</span>
+            message: <span style="color:#269186"><span style="color:#c60000">&quot;</span>World<span style="color:#c60000">&quot;</span></span>
+        <span style="color:#268bd2">}</span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+
+<span style="color:#586e75">//Create a controller builder.</span>
+<span style="color:#268bd2">var</span> builder <span style="color:#859900">=</span> <span style="color:#859900">new</span> controller.InjectedControllerBuilder<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+
+<span style="color:#586e75">//Add our new class to the dependency injector as a transient (create every time) instance.</span>
+builder.Services.addTransient<span style="color:#93a1a1">(</span>HelloWorldController, HelloWorldController<span style="color:#93a1a1">)</span>;
+
+<span style="color:#586e75">//Finally create an instance of the controller for each apperance of a </span>
+<span style="color:#586e75">//data-hr-controller attribute on an element with the value &quot;helloWorldDemo&quot;</span>
+builder.create<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>helloWorldDemo<span style="color:#c60000">&quot;</span></span>, HelloWorldController<span style="color:#93a1a1">)</span>;
+</pre>
+<p>In typescript we create a class called HelloWorldController. In this class we get the view named &quot;hello&quot; and output our data, which is an object with the message &quot;World&quot; in it.</p>
+<p>Finally to create the controller we create a new InjectedControllerBuilder. Next&nbsp;add the new class as a transient service to get one instance per request. Finally create the controller instances by running builder.create to find all &quot;helloWorldDemo&quot; data-hr-controller elements and create a new instance of HelloWorldController bound to those elements.&nbsp;</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/demos/demos.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

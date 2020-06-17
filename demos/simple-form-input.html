@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Input Demo</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h1>Input Example</h1>
+<p>This example shows taking input and outputting it again.</p>
+<p>&nbsp;</p>
+<div class="row" data-hr-controller="inputDemo" data-hr-run="simple-form-input-demo">
+	<form class="col-md-6" data-hr-form="input" data-hr-on-submit="outputInfo">
+		<div class="form-group"><label for="userName">Enter your name</label> <input class="form-control" name="userName" type="text"></div><button type="submit">Submit</button></form>
+	<div class="col-md-6" data-hr-view="output">
+		<p>Hello {{userName}} you have input some data with HtmlRapier.</p></div></div>
+<p>&nbsp;</p>
+<p>Here input your name and press enter (or click submit). Your name will appear in the output section.</p>
+<h2>How Does It Work?</h2>
+<h3>The Markup</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>row<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-controller</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>inputDemo<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-run</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>simple-form-input-demo<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">form</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>col-md-6<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-form</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>input<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-on-submit</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>outputInfo<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>form-group<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+            <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">label</span> <span style="color:#93a1a1">for</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>userName<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Enter your name<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">label</span><span style="color:#586e75">&gt;</span>
+             <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">input</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>form-control<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">name</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>userName<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">type</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>text<span style="color:#269186">&quot;</span></span><span style="color:#586e75"> /&gt;</span>
+        <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">button</span> <span style="color:#93a1a1">type</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>submit<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>Submit<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">button</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">form</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">div</span> <span style="color:#93a1a1">class</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>col-md-6<span style="color:#269186">&quot;</span></span> <span style="color:#93a1a1">data-hr-view</span>=<span style="color:#269186"><span style="color:#269186">&quot;</span>output<span style="color:#269186">&quot;</span></span><span style="color:#586e75">&gt;</span>
+        <span style="color:#586e75">&lt;</span><span style="color:#268bd2;font-weight:700">p</span><span style="color:#586e75">&gt;</span>Hello {{userName}} you have input some data with HtmlRapier.<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">p</span><span style="color:#586e75">&gt;</span>
+    <span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+<span style="color:#586e75">&lt;/</span><span style="color:#268bd2;font-weight:700">div</span><span style="color:#586e75">&gt;</span>
+</pre>
+<p>Here we create a controller called <em>inputDemo </em>with a form named <em>input</em> and a view named <em>output</em>. We also bind the function <em>outputInfo</em> from our controller object to the <em>submit</em> event on the form. You will also see the data-hr-run attribute that fires off the module we have written below.</p>
+<h3>The Typescript</h3>
+<pre style="background:#042029;color:#839496"><span style="color:#586e75">///&lt;amd-module name=&quot;simple-form-input-demo&quot;/&gt;</span>
+
+<span style="color:#269186"><span style="color:#c60000">&quot;</span>use strict<span style="color:#c60000">&quot;</span></span>;
+<span style="color:#859900">import</span> <span style="color:#859900">*</span> as controller from <span style="color:#269186"><span style="color:#c60000">&quot;</span>hr.controller<span style="color:#c60000">&quot;</span></span>;
+
+<span style="color:#586e75">//Create an interface for the data we are handling, so we know what we can put on the form and in the view.</span>
+<span style="color:#268bd2">interface</span> PersonInfo<span style="color:#268bd2">{</span>
+    userName: string;
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">class</span> FormDemoController<span style="color:#268bd2">{</span>
+    <span style="color:#738a05">public</span> <span style="color:#738a05">static</span> get InjectorArgs<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>: controller.DiFunction<span style="color:#859900">&lt;</span>any<span style="color:#859900">&gt;</span><span style="color:#268bd2">[</span><span style="color:#268bd2">]</span> <span style="color:#268bd2">{</span>
+        <span style="color:#859900">return</span> <span style="color:#268bd2">[</span>controller.BindingCollection<span style="color:#268bd2">]</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#738a05">private</span> input: controller.IForm<span style="color:#859900">&lt;</span>PersonInfo<span style="color:#859900">&gt;</span>;
+    <span style="color:#738a05">private</span> output: controller.IView<span style="color:#859900">&lt;</span>PersonInfo<span style="color:#859900">&gt;</span>;
+
+    <span style="color:#738a05">public</span> constructor<span style="color:#93a1a1">(</span>bindings: controller.BindingCollection<span style="color:#93a1a1">)</span><span style="color:#268bd2">{</span>
+        <span style="color:#586e75">//Get the form for the input</span>
+        <span style="color:#268bd2">this</span>.input <span style="color:#859900">=</span> bindings.getForm<span style="color:#859900">&lt;</span>PersonInfo<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>input<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+
+        <span style="color:#586e75">//Get the view</span>
+        <span style="color:#268bd2">this</span>.output <span style="color:#859900">=</span> bindings.getView<span style="color:#859900">&lt;</span>PersonInfo<span style="color:#859900">&gt;</span><span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>output<span style="color:#c60000">&quot;</span></span><span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+
+    <span style="color:#586e75">//This function will be bound to the event labeled data-hr-event-submit=&quot;outputInfo&quot;</span>
+    <span style="color:#586e75">//It should be written as if you were adding it to addEventListener.</span>
+    <span style="color:#738a05">public</span> outputInfo<span style="color:#93a1a1">(</span>evt: Event<span style="color:#93a1a1">)</span>: <span style="color:#268bd2">void</span> <span style="color:#268bd2">{</span>
+        evt.preventDefault<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">var</span> data <span style="color:#859900">=</span> <span style="color:#268bd2">this</span>.input.getData<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+        <span style="color:#268bd2">this</span>.output.setData<span style="color:#93a1a1">(</span>data<span style="color:#93a1a1">)</span>;
+    <span style="color:#268bd2">}</span>
+<span style="color:#268bd2">}</span>
+
+<span style="color:#268bd2">var</span> builder <span style="color:#859900">=</span> <span style="color:#859900">new</span> controller.InjectedControllerBuilder<span style="color:#93a1a1">(</span><span style="color:#93a1a1">)</span>;
+builder.Services.addTransient<span style="color:#93a1a1">(</span>FormDemoController, FormDemoController<span style="color:#93a1a1">)</span>;
+builder.create<span style="color:#93a1a1">(</span><span style="color:#269186"><span style="color:#c60000">&quot;</span>inputDemo<span style="color:#c60000">&quot;</span></span>, FormDemoController<span style="color:#93a1a1">)</span>;
+</pre>
+<p>Here we create a controller called FormDemoController. Inside we get the named form and view. In the outputInfo function we grab the user input and put it on the view.</p>
+<p>The controller is created by creating a builder, adding the controller as a transient service and then finally creating the controller instance on all data-hr-controller=&quot;inputDemo&quot; elements.</p>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/demos/demos.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>

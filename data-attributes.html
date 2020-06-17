@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Attributes</title>
+    <link rel="stylesheet" href="/HtmlRapierDocs/lib/bootstrap/dist/css/bootstrap-custom.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/simple-sidebar.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/sidebar/css/sidemenu.css?linkver=20200617014609" type="text/css">
+<link rel="stylesheet" href="/HtmlRapierDocs/lib/edity/css/layout.css?linkver=20200617014609" type="text/css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-nomargin" data-hr-run="edity.theme.layouts.default">
+        <a class="navbar-brand" href="#ToggleMenu" data-target="#wrapper" data-toggle="sidebar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+        <div class="navbar-header navbar-nowrap">
+            <a class="navbar-brand" href="/HtmlRapierDocs/">HtmlRapier Docs</a>
+        </div>
+    </nav>
+
+    <div class="navbar-shadow-short"></div>
+    <div class="navbar-spacer-short"></div>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="sidebar-with-navbar-short">
+            <div class="mainTreeMenu" data-hr-controller="treeMenu" data-hr-config-urlroot="/HtmlRapierDocs/" data-hr-config-menu="/HtmlRapierDocs/menus/mainMenu.json" data-hr-config-scrollelement="#sidebar-wrapper" data-hr-model-component="sidebarMenuComponent" data-hr-config-treemenu-version="4F6E7F3056BA8BC8777BC866D2E04D0331530E5DFBE6BD561E47BFC3F4EDDF92">
+                <ul class="sidebarMenu" data-hr-model="childItems" data-hr-model-component="sidebarMenuComponent">
+                    <template data-hr-component="sidebarMenuComponent">
+                        <li class="folder">
+                            <div class="item" data-hr-on-click="toggleMenuItem" data-hr-toggle="current" data-hr-class-on="currentFolder"><span data-hr-toggle="children" class="glyphicon" data-hr-class-on="glyphicon-folder-open" data-hr-class-off="glyphicon-folder-close"></span> {{name}}</div>
+                            <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                        </li>
+                    </template>
+                    <template data-hr-variant="link">
+                        <li class="link">
+                            <a href="{{urlRoot}}{{link}}" target="{{target}}">
+                                <div class="mainBlock" data-hr-toggle="current" data-hr-class-on="currentLink">
+                                    {{name}}
+                                </div>
+                            </a>
+                        </li>
+                    </template>
+                    <template data-hr-variant="root">
+                        <div class="children" data-hr-model="children" data-hr-model-component="sidebarMenuComponent" data-hr-toggle="children" data-hr-class-on="expanded" data-hr-style-off="display:none;"></div>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 pageContent">
+                        <h3 id="DataAttributes">Data Attributes</h3>
+<p>At its heart this library is a fancy way of labeling elements on a html page with some attributes that make extracting them later, with some special properties, easier. You can define the following types of attributes on your elements.</p>
+<ul>
+	<li><strong>Controller </strong>- <code><samp><font face="Courier New">data-hr-controller=&quot;<em>controllerName</em>&quot;</font></samp></code> - This defines the primary interface between your javascript and the markup and act as more or less of an entry point for everything else. The <em>controllerName </em>value defines the name of the controller.</li>
+	<li><strong>Event<strong> </strong></strong>-<strong> </strong><code><font face="Courier New">data-hr-on-<em>eventName</em>=&quot;<em>functionName</em>&quot;</font></code><em> - </em>Bind the html&nbsp;event <em>eventName </em>to the function in your controller named <em>functionName</em>. This supports all events that the browser can register with addEventListener.</li>
+	<li><strong>Config</strong> - <code><font face="Courier New">data-hr-config-<em>name</em>=&quot;<em>value</em>&quot;</font></code> - Create a configuration for the controller named <em>name </em>with the value <em>value</em>. All the config values for a controller are extracted into a single object so the -name part should be unique.</li>
+	<li><strong>Toggle</strong> - <code><font face="Courier New">data-hr-toggle=&quot;<em>name</em>&quot;</font></code> - Create a toggle named name. Toggles abstract the dom from your javascript for things like styles and classes. Toggles can be set to on and off in your javascript code. You can use the following attributes to in addition to a data-hr-toggle on an element to control what it looks like when the toggle is on and off.
+	<ul>
+		<li><strong>On Styles</strong> -<strong> </strong><code><font face="Courier New">data-hr-style-on=&quot;<em>styleList</em>&quot;</font></code> - Apply the styles in <em>styleList </em>when this toggle is on.</li>
+		<li><strong>Off Styles</strong> - <code><font face="Courier New">data-hr-style-off=&quot;<em>styleList</em>&quot;</font></code> - Apply the styles in <em>styleList </em>when this toggle is off.</li>
+		<li><strong>On Classes</strong> - <code><font face="Courier New">data-hr-class-on=&quot;<em>classList</em>&quot;</font></code> - Apply the classes in <em>classList </em>when this toggle is on.</li>
+		<li><strong>Off Classes</strong> - <code><font face="Courier New">data-hr-class-off=&quot;<em>classList</em>&quot;</font></code> - Apply the classes in <em>classList </em>when this toggle is off.</li>
+		<li><strong>Idle Classes</strong> - <code><font face="Courier New">data-hr-class-idle=&quot;<em>classList</em>&quot;</font></code> - Apply <em>classList </em>classes when the animations on this element have completed. HtmlRapier can track animation states when you toggle and will apply this class after the animations are completed.</li>
+		<li><strong>You can also make your own modes for styles or classes</strong>. The mode name is derived from the last section of the name. For example you could have an element with <code>data-hr-style-disabled</code> added to -on and -off styles. This will create a third toggle mode for &quot;disabled&quot;. Note that for additional modes to be supported the Toggle defined in the typescript code be aware of the mode. You can make custom toggle classes to support this.</li>
+	</ul></li>
+	<li><strong>Form</strong> - <code>data-hr-form=&quot;name&quot;</code> - Create a form on the specified element named name. Forms allow you to easily read / write data from form elements in the dom. In addition to this you can set a prototype object that will be used as the prototype object for data returned from the form. This allows you to create forms with extra data not on the form easily since it can be stored in the prototype object. You can also set a schema for the form. Currently this is loosly based on JsonSchema4, but there are extensions to the data to help fully describe the forms. You can let the schema build the form or you can provide the elements yourself and fill in dynamic things like combo boxes, or you can define some elements and have others created automaticly from the schema.
+	<ul>
+		<li>If you are defining a form element yourself you can create a toggle named <em>itemName</em>Error (where&nbsp;itemName is the name set on the form attribute)&nbsp;to be able to toggle things with an error. You can also define a view <em>itemName</em>ErrorMessage that has an argument of {{this}} somewhere in it. The error messages are passed directly so you want to use {{this}}. All of these elements should be inside an element that has a <code>data-hr-input-start</code> attribute on it. You can also dictate where the auto generated elements should insert by specifying a <code>data-hr-form-end</code> attribute, otherwise they will insert at the end of what is on the form already.</li>
+		<li>Custom Json Schema Extensions
+		<ul>
+			<li><strong>x-ui-order</strong>&nbsp;- This determines the ui order of the properties, the properties will be sorted by this index before they are processed.</li>
+			<li><strong>x-ui-type</strong> - Specify the type of control that should be created, this is not a 1:1 mapping to html input types, but it is close. You can create special types and create template variants for types you want more control over the appearance of on your form.</li>
+			<li><strong>x-values</strong> - An array of label value pairs that specify possible values for the control.</li>
+			<li><strong>x-enumNames</strong> - If an enum string is provided, this is an array of display names for those enum values.</li>
+			<li><strong>x-value</strong> - If there is a single value for a field this can set that value. Helpful for things like checkboxes.</li>
+		</ul></li>
+	</ul></li>
+	<li><strong>View</strong> - <code>data-hr-view=&quot;name&quot;</code> - Create a view on the specified element named name.&nbsp;A view, if it is able, will automatically repeat collection data that it is passed, otherwise it outputs a single element. All views will escape their output for malicious html, so you don&#39;t need to scrub your data yourself. Depending on what kind of element you attach this to you will get different concrete view types, however, the interface remains the same and you could swap one for another without changing code.
+	<ul>
+		<li><strong>ComponentModel</strong> - This model is created when the data-hr-model attribute is added to a node that also has data-hr-component on it (or will get one from an anonymous template). It will use a template that you define to output the data you specify. If the data is a collection then you will get repeated elements. This is the most flexible kind of model. To get this kind of model add a <code><font face="Courier New">data-hr-view-component=&quot;name&quot;</font></code> attribute to it or define a template as its child, which will make an anonymous template, which has the same effect without you needing to come up with a name yourself.</li>
+		<li><strong>TextNodeModel </strong>- With no special conditions a TextNodeModel is created. This will look for variables defined like {{varName}} and fill them in with matching data on the object bound to this model.</li>
+	</ul></li>
+	<li><strong>Model </strong>- <code><font face="Courier New">data-hr-model=&quot;<em>name</em>&quot;</font></code> - This is the old name for forms and views and is deprecated. &nbsp;Originally these were handled as one thing, but it didn&#39;t really make sense. For now the system still supports getting models from binding collecitons and using data-hr-model in html, however, those things are deprecated and should never be used in new code.</li>
+	<li><strong>Component</strong> - <code><font face="Courier New">&lt;template data-hr-component=&quot;<em>name</em>&quot;&gt;<em>markup</em>&lt;/template&gt;</font></code> - Create a component named <em>name</em> with the html code <em>markup</em>. Components must be &lt;template&gt; elements. You can actually omit the <code><font face="Courier New">data-hr-component=&quot;name&quot;</font></code> attribute if you are creating the component as a direct descendant of a model node, which creates an anonymous template that gets its name assigned at runtime. This makes labeling components to their models much simpler since you don&#39;t have to come up with a ton of unique names, however, sometimes you will need to specify the names directly and you can do this here.
+	<ul>
+		<li><strong>Variant </strong>- <code><font face="Courier New">&lt;template data-hr-component=&quot;componentName&quot; data-hr-variant=&quot;<em>name</em>&quot;&gt;<em>markup</em>&lt;/template&gt;</font></code> - This will specify a variant of a template. Variants allow you to have different verisons of a component depending on your source data. You will define a function when binding data to a model that returns the name of the variant to use for a component. Variant names must be unique for each component, but can be repeated otherwise. You can omit the data-hr-component part if you are creating this variant as part of a variant chain. To do this create your first template element, either anonymous or with a name. Next as the immediate sibling to that first &lt;template&gt; element create another with the data-hr-variant attribute and give it a variant name. This will attach the 2nd template as a variant on the first. This chain will continue until there are no more siblings or another element type is encountered.</li>
+	</ul></li>
+	<li><strong>Handle</strong> - <code>data-hr-handle</code> - Get direct access to the HtmlElement pointed to by the named handle. Mostly useful to pass elements into third party libraries that want them, otherwise should be avoided as much as possible.</li>
+	<li><strong>Ignore </strong>- <code><font face="Courier New">data-hr-ignored</font></code> - Add this to an element to ignore any components and controllers it has as children. This is mostly a special case to handle editors where you still need to run other HtmlRapier code.</li>
+	<li><strong>Run</strong> - <code>data-hr-run</code> - This is used to make jsns run a particular named javascript module. If you are using jsns (the default) you will need one of these in your code to kick off whatever runs your main code, otherwise you can do whatever is appropriate for your package manager. HtmlRapier does not mandate a project layout (beyond using typescript ideally in a flat dependency structure, and even then you can make it work in pure javascript).</li>
+</ul>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="footer-padding"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/HtmlRapierDocs/lib/polyfill.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tslib.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/jquery/dist/jquery.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/bootstrap/dist/js/bootstrap.min.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/tsbin.prod.js?linkver=20200617014609"></script>
+<script type="text/javascript" src="/HtmlRapierDocs/lib/hr-run.js?linkver=20200617014609"></script>
+
+</body>
+
+</html>
